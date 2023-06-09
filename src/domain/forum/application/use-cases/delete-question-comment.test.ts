@@ -1,17 +1,17 @@
 import { InMemoryQuestionCommentsRepository } from "test/repositories/in-memory-question-comments-repository";
-import { DeleteCommentQuestionUseCase } from "./delete-question-comments";
+import { DeleteQuestionCommentUseCase } from "./delete-question-comment";
 import { makeQuestionComment } from "test/factories/make-question-comment";
 import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 
 let inMemoryQuestionCommentsRepository: InMemoryQuestionCommentsRepository;
-let sut: DeleteCommentQuestionUseCase;
+let sut: DeleteQuestionCommentUseCase;
 
 describe("Delete Question Comment", () => {
 	beforeEach(() => {
 		inMemoryQuestionCommentsRepository =
 			new InMemoryQuestionCommentsRepository();
 
-		sut = new DeleteCommentQuestionUseCase(inMemoryQuestionCommentsRepository);
+		sut = new DeleteQuestionCommentUseCase(inMemoryQuestionCommentsRepository);
 	});
 
 	it("should be able to delete a question comment", async () => {
@@ -35,7 +35,7 @@ describe("Delete Question Comment", () => {
 		await inMemoryQuestionCommentsRepository.create(questionComment);
 
 		expect(() => {
-			sut.execute({
+			return sut.execute({
 				questionCommentId: questionComment.id.toString(),
 				authorId: "author-2",
 			});
